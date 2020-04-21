@@ -3,7 +3,7 @@ class LessonCompletionData
     @course = course
     @lesson_completions = lesson_completions_after(newest_lesson_creation_date)
     @lesson_duration_data = LessonDurationData.new(@lesson_completions, ordered_lessons)
-    @agregated_lesson_completions = LessonCompletionAggregator.new(@lesson_completions)
+    @aggregated_lesson_completions = LessonCompletionAggregator.new(@lesson_completions)
   end
 
   def newest_lesson_creation_date
@@ -30,7 +30,7 @@ class LessonCompletionData
     @lesson_duration_data.get_lesson_duration(lesson).inspect
   end
   def lesson_completions_count(lesson)
-    @agregated_lesson_completions.lesson_completions_count[lesson.id]
+    @aggregated_lesson_completions.lesson_completions_count[lesson.id]
   end
   
   private
