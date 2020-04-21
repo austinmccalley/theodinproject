@@ -67,9 +67,8 @@ class LessonDurationData
   end
 
   def calculate_lesson_duration(lesson, previous_lesson)
-    lesson_completion_datetime_average = lesson_completion_datetime_average(lesson)
-    previous_lesson_completion_datetime_average = lesson_completion_datetime_average(previous_lesson)
-    seconds_duration = lesson_completion_datetime_average - previous_lesson_completion_datetime_average
+    all_lesson_durations = @aggregated_lesson_completions\
+    .all_durations_for_lesson(lesson, previous_lesson)
     ActiveSupport::Duration.build(seconds_duration)
   end
 

@@ -10,11 +10,25 @@ class LessonCompletionAggregator
     .count
   end
 
-  def all_durations_for_lesson(lesson_id, last_lesson_id)
+  def lesson_duration(lesson_id, last_lesson_id)
+    durations = all_lesson_durations(lesson_id, last_lesson_id)
+    average_array(durations)
+  end
+
+  private
+
+  def all_lesson_durations(lesson_id, last_lesson_id)
+    durations =\
     @lesson_completions\
     .where(lesson_id: [lesson_id, last_lesson_id])\
     .group('lesson_completions.student_id')\
     .having("count(lesson_completions) = 2")\
     .pluck("max(extract(epoch from created_at)) - min(extract(epoch from created_at))")
+  end
+
+  def average_array(array)
+    array_length = array.length
+    array_sum = array.sum
+    array_sum / array_length
   end
 end
