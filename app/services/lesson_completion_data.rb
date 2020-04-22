@@ -27,7 +27,7 @@ class LessonCompletionData
   end
 
   def lesson_duration(lesson)
-    @lesson_duration_data.get_lesson_duration(lesson).inspect
+    @lesson_duration_data.known_completion_durations[lesson.id].inspect
   end
 
   def lesson_completions_count(lesson)

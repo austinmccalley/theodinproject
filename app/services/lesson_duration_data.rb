@@ -22,8 +22,8 @@ class LessonDurationData
   end
 
   def lesson_percentage_of_total(lesson)
-    lesson_duration = get_lesson_duration(lesson)
-    (lesson_duration / known_completion_durations_total * 100).to_f .round(2)
+    lesson_duration = known_completion_durations[lesson.id]
+    (lesson_duration / known_completion_durations_total * 100).to_f.round(2)
   end
 
   def average_lesson_duration
@@ -32,7 +32,7 @@ class LessonDurationData
   end
 
   def lesson_weight(lesson)
-    (get_lesson_duration(lesson) / average_lesson_duration).to_f.round(2)
+    (known_completion_durations[lesson.id] / average_lesson_duration).to_f.round(2)
   end
 
   def ammount_of_lessons_with_known_durations
@@ -56,8 +56,7 @@ class LessonDurationData
   def lessons_with_known_completion_times
     filtered_lessons = []
     @lessons.to_a.each do |lesson|
-      lesson_completion_datetime_average = lesson_completion_datetime_average(lesson)
-      if lesson_completion_datetime_average
+      if records_exist_for(lesson)
         filtered_lessons << lesson
       else
         break
@@ -67,12 +66,12 @@ class LessonDurationData
   end
 
   def calculate_lesson_duration(lesson, previous_lesson)
-    all_lesson_durations = @aggregated_lesson_completions\
-    .all_durations_for_lesson(lesson, previous_lesson)
+    seconds_duration = @aggregated_lesson_completions\
+    .lesson_duration(lesson, previous_lesson)
     ActiveSupport::Duration.build(seconds_duration)
   end
 
-  def lesson_completion_datetime_average(lesson)
-    @aggregated_lesson_completions.lesson_avg_completion_datetime_pairs[lesson.id]
+  def records_exist_for(lesson)
+    @aggregated_lesson_completions.records_exist_for_lesson?(lesson)
   end
 end
