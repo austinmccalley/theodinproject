@@ -28,7 +28,7 @@ class LessonCompletionAggregator
     @lesson_completions\
     .where(lesson_id: [lesson_id, last_lesson_id])\
     .group('lesson_completions.student_id')\
-    .having("count(lesson_completions) > 1")\
+    .having("count(lesson_completions) = 2")\
     .pluck("max(extract(epoch from created_at)) - min(extract(epoch from created_at))")
   end
 
