@@ -24,7 +24,6 @@ class LessonCompletionAggregator
   private
 
   def all_lesson_durations(lesson_id, last_lesson_id)
-    durations =\
     @lesson_completions\
     .where(lesson_id: [lesson_id, last_lesson_id])\
     .group('lesson_completions.student_id')\
