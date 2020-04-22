@@ -1,7 +1,7 @@
 class LessonCompletionData
   def initialize(course)
     @course = course
-    @lesson_completions = lesson_completions_after(newest_lesson_creation_date)
+    @lesson_completions = lesson_completions
     @lesson_duration_data = LessonDurationData.new(@lesson_completions, ordered_lessons)
     @aggregated_lesson_completions = LessonCompletionAggregator.new(@lesson_completions)
   end
@@ -39,12 +39,7 @@ class LessonCompletionData
   attr_reader :course
 
   def lesson_completions
-    @lesson_completions ||= \
     LessonCompletion.where(lesson_id: lesson_ids)
-  end
-
-  def lesson_completions_after(date)
-    lesson_completions.where('lesson_completions.created_at > ?', date)
   end
 
   def lesson_ids
