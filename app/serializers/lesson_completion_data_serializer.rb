@@ -15,12 +15,11 @@ class LessonCompletionDataSerializer
   private
 
   def lessons_data_hash
-    lessons_data_hash = {}
     lessons = @lesson_completion_data.lessons_with_known_completion_durations
-    lessons.map do |lesson|
-      lessons_data_hash[lesson.title] = lesson_data_hash(lesson)
+    lessons.reduce({}) do |hash, lesson|
+      hash[lesson.title] = lesson_data_hash(lesson)
+      hash
     end
-    lessons_data_hash
   end
 
   def course_data_hash
