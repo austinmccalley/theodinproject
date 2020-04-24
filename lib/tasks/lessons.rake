@@ -1,5 +1,5 @@
 namespace :lessons do
-  desc 'Print User Data'
+  desc 'Prints Average Lesson Durations'
   task print_completion_data: :environment do
     start_date, end_date = ENV["DATE_RANGE"].split('-')
     start_date = DateTime.parse(start_date)
