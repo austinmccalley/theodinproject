@@ -60,3 +60,4 @@ class LessonCompletionData
     .where('courses.id = ?', @course.id)
   end
 end
+
