@@ -4,12 +4,12 @@ class LessonCompletionDataSerializer
     @lesson_completion_data = LessonCompletionData.new(@course, start_date, end_date)
   end
 
-  def as_yaml
-    {@course.title => course_data_hash.merge(lessons_data_hash)}.to_yaml
+  def as_json
+    {@course.title => course_data_hash.merge(lessons_data_hash)}
   end
 
-  def self.as_yaml(course, start_date, end_date = Time.now)
-    new(course, start_date, end_date).as_yaml
+  def self.as_json(course, start_date, end_date = Time.now)
+    new(course, start_date, end_date).as_json
   end
 
   private
