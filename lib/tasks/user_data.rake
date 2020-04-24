@@ -1,4 +1,4 @@
-namespace :user_data do
+namespace :lessons do
   desc 'Print User Data'
   task print_completion_data: :environment do
     start_date, end_date = ENV["DATE_RANGE"].split('-')
