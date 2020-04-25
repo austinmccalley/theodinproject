@@ -6,10 +6,6 @@ class LessonCompletionData
     @aggregated_lesson_completions = LessonCompletionAggregator.new(@lesson_completions)
   end
 
-  def newest_lesson_creation_date
-    @most_recent_lesson_creation_epoch ||= Lesson.maximum('created_at')
-  end
-
   def course_duration_string
     @lesson_duration_data.known_completion_durations_total.inspect
   end
