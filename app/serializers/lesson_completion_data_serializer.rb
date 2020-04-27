@@ -5,7 +5,7 @@ class LessonCompletionDataSerializer
   end
 
   def as_json
-    {@course.title => course_data_hash.merge(lessons_data_hash)}
+    {@course.title => lessons_data_hash}
   end
 
   def self.as_json(course, start_date, end_date = Time.now)
@@ -22,19 +22,9 @@ class LessonCompletionDataSerializer
     end
   end
 
-  def course_data_hash
-    {
-      'course_duration' => @lesson_completion_data.course_duration_string
-    }
-  end
-
   def lesson_data_hash(lesson)
     {
-      'lesson_weight' => @lesson_completion_data.lesson_weight(lesson),
-      'percentage' => @lesson_completion_data.lesson_percentage(lesson),
       'duration' => @lesson_completion_data.lesson_duration(lesson),
-      '# of Lesson Completions calculated' => @lesson_completion_data\
-      .lesson_completions_count(lesson)
     }
   end
 end

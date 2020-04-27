@@ -11,32 +11,9 @@ class LessonDurationData
     end.to_h
   end
 
-  def known_completion_durations_total
-    @known_completion_durations_total ||= \
-    known_completion_durations.values.sum
-  end
-
   def get_lesson_duration(lesson)
     last_lesson = previous_lesson(lesson)
     calculate_lesson_duration(lesson, last_lesson)
-  end
-
-  def lesson_percentage_of_total(lesson)
-    lesson_duration = known_completion_durations[lesson.id]
-    (lesson_duration / known_completion_durations_total * 100).to_f.round(2)
-  end
-
-  def average_lesson_duration
-    @average_lesson_duration ||= \
-    known_completion_durations_total / ammount_of_lessons_with_known_durations
-  end
-
-  def lesson_weight(lesson)
-    (known_completion_durations[lesson.id] / average_lesson_duration).to_f.round(2)
-  end
-
-  def ammount_of_lessons_with_known_durations
-    lessons_with_known_completion_durations.size
   end
 
   def lessons_with_known_completion_durations

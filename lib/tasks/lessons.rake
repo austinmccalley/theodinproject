@@ -3,8 +3,9 @@ namespace :lessons do
   task :average_duration, [:start_date, :end_date] => :environment do |task, args|
     start_date = DateTime.parse(args.start_date)
     end_date = DateTime.parse(args.end_date)
-    Course.all.each do |course|
-      puts LessonCompletionDataSerializer.as_json(course, start_date, end_date).to_yaml
-    end
+    duration_data = Course.all.map do |course|
+      LessonCompletionDataSerializer.as_json(course, start_date, end_date).to_yaml
+    end.join
+    Rails.logger.info duration_data
   end
 end
