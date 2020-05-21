@@ -11,17 +11,19 @@ const CreateSubmissionForm = () => {
         </div>
 
         <div className="form__section">
-          <span className="form__icon fab fa-github"></span>
+          <span className="form__icon fas fa-link"></span>
           <input className="form__element form__element--with-icon" type="text" placeholder="Live Preview URL"/>
         </div>
 
-        <input type="checkbox" id="public" />
-        <label for="public">Make Solution Public</label>
-        <label className="toggle-switch">
-          <input type="checkbox" />
-          <span className="toggle-switch__slider round"></span>
-        </label>
-        <button type="submit" className="button button--primary">Submit</button>
+        <div className="form__section form__section--right-aligned">
+
+          <span class="bold">MAKE SOLUTION PUBLIC</span>
+          <label className="toggle-switch toggle-switch--space-around">
+            <input type="checkbox" />
+            <span className="toggle-switch__slider round"></span>
+          </label>
+          <button type="submit" className="button button--primary">Submit</button>
+        </div>
       </form>
     </div>
   )
