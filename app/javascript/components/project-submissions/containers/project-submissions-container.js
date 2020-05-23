@@ -30,7 +30,7 @@ class ProjectSubmissions extends React.Component {
             <h4 className="submissions__project-title">{course.title}: ({lesson.title})</h4>
           </div>
           <Modal show={this.state.showCreateModal} handleClose={this.hideModal}>
-            <CreateSubmissionForm />
+            <CreateSubmissionForm lessonId={lesson.id}/>
           </Modal>
 
           <div>
