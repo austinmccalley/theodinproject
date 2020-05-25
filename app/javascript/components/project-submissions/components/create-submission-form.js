@@ -44,12 +44,11 @@ const CreateSubmissionForm = (props) => {
             ref={register({
               required: 'Required',
               pattern: {
-                value: /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/,
+                value: /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/,
                 message: "Must be a URL"
               }
 
             })}
-            // onChange={this.handleChange}
           />
         </div>
         {errors.repo_url && <div className="form__error-message push-down"> {errors.repo_url.message}</div> }
@@ -64,11 +63,10 @@ const CreateSubmissionForm = (props) => {
             ref={register({
               required: "Required",
               pattern: {
-                value: /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/,
+                value: /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/,
                 message: "Must be a URL"
               }
             })}
-            // onChange={this.handleChange}
           />
         </div>
         {errors.live_preview_url && <div className="form__error-message push-down"> {errors.live_preview_url.message}</div> }
