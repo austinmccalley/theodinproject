@@ -1,39 +1,14 @@
 import React from 'react';
 import { useForm } from "react-hook-form";
 
-import axios from '../../../src/js/axiosWithCsrf';
-
 const CreateSubmissionForm = (props) => {
   const { register, errors, handleSubmit, watch } = useForm();
-  console.log(errors)
-
-  const onSubmit = (data) => {
-    console.log(data)
-    const { lessonId } = props;
-    const { repo_url, live_preview_url, is_public } = data
-
-    event.preventDefault()
-
-    axios.post(
-      `/lessons/${lessonId}/projects`,
-      {
-        project: {
-          repo_url,
-          live_preview_url,
-          is_public,
-          lesson_id: lessonId,
-        }
-      }
-    ).then(response => {
-      console.log(response)
-    })
-  }
 
   return (
     <div>
       <h1 className="text-center accent">Upload Your Project</h1>
 
-      <form className="form" onSubmit={handleSubmit(onSubmit)}>
+      <form className="form" onSubmit={handleSubmit(props.onSubmit)}>
         <div className="form__section">
           <span className="form__icon fab fa-github"></span>
           <input

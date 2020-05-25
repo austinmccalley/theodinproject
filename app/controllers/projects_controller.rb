@@ -12,7 +12,7 @@ class ProjectsController < ApplicationController
 
   def create
     project = current_user.projects.create!(project_params)
-    render json: { project: project }, status: :ok
+    render json: { project: ProjectSerializer.as_json(project) }, status: :ok
   end
 
   def update
