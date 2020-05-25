@@ -39,9 +39,10 @@ class ProjectSubmissions extends React.Component {
         }
       }
     ).then(response => {
-      console.log(response.data.project)
-      this.setState({ submissions: [response.data.project, ...this.state.submissions] })
-      console.log(this.state)
+      this.setState({
+        submissions: [response.data.project, ...this.state.submissions],
+        showCreateModal: false
+      })
     })
   }
 
