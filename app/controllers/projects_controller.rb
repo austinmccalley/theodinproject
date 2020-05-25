@@ -11,7 +11,7 @@ class ProjectsController < ApplicationController
   end
 
   def create
-    project = current_user.projects.create(project_params)
+    project = current_user.projects.create!(project_params)
     render json: { project: project }, status: :ok
   end
 
@@ -55,6 +55,11 @@ class ProjectsController < ApplicationController
   end
 
   def project_params
-    params.require(:project).permit(:repo_url, :live_preview, :lesson_id )
+    params.require(:project).permit(
+      :repo_url,
+      :live_preview_url,
+      :is_public,
+      :lesson_id
+    )
   end
 end

@@ -5,8 +5,9 @@ class Project < ApplicationRecord
   acts_as_votable
   paginates_per 100
 
-  validates :repo_url, format: { with: /\Ahttps?:\/\/github.com\//,
-    message: 'must start with http://github.com/ or https://github.com/' }
+  validates :repo_url, format: { with: URI.regexp, message: 'must be a url' }
+  validates :live_preview_url, format: { with: URI.regexp, message: 'must be a url' }
+  validates :repo_url, :live_preview_url, presence: true
 
   default_scope { order('updated_at desc') }
   scope :all_submissions, ->(lesson_id) { where(lesson_id: lesson_id) }

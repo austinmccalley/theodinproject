@@ -1,30 +1,16 @@
 import React from 'react';
+import { useForm } from "react-hook-form";
 
 import axios from '../../../src/js/axiosWithCsrf';
 
-class CreateSubmissionForm extends React.Component {
-  constructor(props) {
-    super(props)
+const CreateSubmissionForm = (props) => {
+  const { register, errors, handleSubmit, watch } = useForm();
+  console.log(errors)
 
-    this.state = {}
-
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-  }
-
-  handleChange(event) {
-    const { name, value, type, checked } = event.target;
-
-    if (type === "checkbox") {
-      this.setState({ [name]: checked})
-    } else {
-      this.setState({ [name]: value })
-    }
-  }
-
-  handleSubmit(event) {
-    const { lessonId } = this.props;
-    const { repo_url, live_preview } = this.state;
+  const onSubmit = (data) => {
+    console.log(data)
+    const { lessonId } = props;
+    const { repo_url, live_preview_url, is_public } = data
 
     event.preventDefault()
 
@@ -33,7 +19,8 @@ class CreateSubmissionForm extends React.Component {
       {
         project: {
           repo_url,
-          live_preview,
+          live_preview_url,
+          is_public,
           lesson_id: lessonId,
         }
       }
@@ -42,47 +29,62 @@ class CreateSubmissionForm extends React.Component {
     })
   }
 
-  render() {
-    return (
-      <div>
-        <h1 className="text-center accent">Upload Your Project</h1>
+  return (
+    <div>
+      <h1 className="text-center accent">Upload Your Project</h1>
 
-        <form className="form" onSubmit={this.handleSubmit}>
-          <div className="form__section">
-            <span className="form__icon fab fa-github"></span>
-            <input
-              className="form__element form__element--with-icon"
-              type="text"
-              name="repo_url"
-              placeholder="Repository URL"
-              onChange={this.handleChange}
-            />
-          </div>
+      <form className="form" onSubmit={handleSubmit(onSubmit)}>
+        <div className="form__section">
+          <span className="form__icon fab fa-github"></span>
+          <input
+            className="form__element form__element--with-icon"
+            type="text"
+            name="repo_url"
+            placeholder="Repository URL"
+            ref={register({
+              required: 'Required',
+              pattern: {
+                value: /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/,
+                message: "Must be a URL"
+              }
 
-          <div className="form__section">
-            <span className="form__icon fas fa-link"></span>
-            <input
-              className="form__element form__element--with-icon"
-              type="text"
-              placeholder="Live Preview URL"
-              name="live_preview"
-              onChange={this.handleChange}
-            />
-          </div>
+            })}
+            // onChange={this.handleChange}
+          />
+        </div>
+        {errors.repo_url && <div className="form__error-message push-down"> {errors.repo_url.message}</div> }
 
-          <div className="form__section form__section--right-aligned">
-            <span className="bold">MAKE SOLUTION PUBLIC</span>
-            <label className="toggle-switch toggle-switch--space-around">
-              <input type="checkbox" name="public" onChange={this.handleChange}  />
-              <span className="toggle-switch__slider round"></span>
-            </label>
-            <button type="submit" className="button button--primary">Submit</button>
-          </div>
+        <div className="form__section">
+          <span className="form__icon fas fa-link"></span>
+          <input
+            className="form__element form__element--with-icon"
+            type="text"
+            placeholder="Live Preview URL"
+            name="live_preview_url"
+            ref={register({
+              required: "Required",
+              pattern: {
+                value: /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/,
+                message: "Must be a URL"
+              }
+            })}
+            // onChange={this.handleChange}
+          />
+        </div>
+        {errors.live_preview_url && <div className="form__error-message push-down"> {errors.live_preview_url.message}</div> }
 
-        </form>
-      </div>
-    )
-  }
+        <div className="form__section form__section--right-aligned">
+          <span className="bold">MAKE SOLUTION PUBLIC</span>
+          <label className="toggle-switch toggle-switch--space-around">
+            <input type="checkbox" name="is_public" ref={register}  />
+            <span className="toggle-switch__slider round"></span>
+          </label>
+          <button type="submit" className="button button--primary">Submit</button>
+        </div>
+
+      </form>
+    </div>
+  )
 }
 
 
